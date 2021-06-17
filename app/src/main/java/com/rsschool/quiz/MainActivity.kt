@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity(), QuestionFragmentListener {
     override fun setNextQuestion() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(0,0)
         finish()
     }
 }

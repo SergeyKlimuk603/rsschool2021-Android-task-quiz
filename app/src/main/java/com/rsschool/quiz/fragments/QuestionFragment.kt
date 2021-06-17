@@ -62,7 +62,8 @@ class QuestionFragment : Fragment() {
             currentQuestion = 0
         }
         lastQuestion = sPref?.getInt(LAST_QUESTION, -1) ?: -1
-        userChoice = sPref?.getInt(USER_CHOICE, -1) ?: -1
+        userChoice = sPref?.getInt("$USER_CHOICE-$currentQuestion", -1) ?: -1
+        println()
     }
 
     override fun onCreateView(
