@@ -1,19 +1,17 @@
 package com.rsschool.quiz.fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.rsschool.quiz.CURRENT_QUIZ
-import com.rsschool.quiz.R
 import com.rsschool.quiz.databinding.FragmentResultBinding
 import com.rsschool.quiz.interfaces.ResultFragmentListener
 import com.rsschool.quiz.models.Question
-import java.lang.StringBuilder
 
 
 class ResultFragment : Fragment() {
@@ -42,9 +40,10 @@ class ResultFragment : Fragment() {
         questions = Array(lastQuestion + 1) { null }
         for (i in userAnswers.indices) {
             userAnswers[i] = sPref?.getInt("$USER_CHOICE-$i", -1) ?: -1
-            val answers = Array<String>(5) { "" }
+            val answers = Array(5) { "" }
             for (j in answers.indices) {
-                sPref?.getString("$ANSWER-$i-$j", "") ?: ""
+                answers[j] = sPref?.getString("$ANSWER-$i-$j", "") ?: ""
+                println(answers[j])
             }
             questions[i] = Question(
                 sPref?.getString("$QUESTION-$i", "") ?: "",
@@ -69,11 +68,19 @@ class ResultFragment : Fragment() {
         }
         stringResult.insert(0, "Ваш результат: $result/${userAnswers.size}\n\n")
         binding.tvResult.text = "Ваш результат: $result/${userAnswers.size}"
+        binding.tvStringResult.text = stringResult.toString()
         setButtonListeners()
         return binding.root
     }
 
     private fun setButtonListeners() {
+        binding.btnShare.setOnClickListener() {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Результат квиза")   //Устанавливаем Тему сообщения
+            intent.putExtra(Intent.EXTRA_TEXT, stringResult.toString())     //Устанавливаем само сообщение
+            intent.type = "message/rfc822"                                  //тип отправляемого сообщения
+            startActivity(intent)
+        }
         binding.btnBack.setOnClickListener() {
             listener?.startNewQuiz()
         }
