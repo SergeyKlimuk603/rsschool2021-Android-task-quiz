@@ -15,11 +15,11 @@ import com.rsschool.quiz.database.QuestionBase
 import com.rsschool.quiz.databinding.FragmentQuestionBinding
 import com.rsschool.quiz.interfaces.QuestionFragmentListener
 
-private const val QUESTION = "question"
-private const val ANSWER = "answer"
-private const val RIGHT_ANSWER = "rightAnswer"
-private const val LAST_QUESTION = "lastQuestion"
-private const val USER_CHOICE = "userChoice"
+const val QUESTION = "question"
+const val ANSWER = "answer"
+const val RIGHT_ANSWER = "rightAnswer"
+const val LAST_QUESTION = "lastQuestion"
+const val USER_CHOICE = "userChoice"
 
 class QuestionFragment : Fragment() {
 

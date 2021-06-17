@@ -7,12 +7,14 @@ import androidx.fragment.app.Fragment
 import com.rsschool.quiz.fragments.QuestionFragment
 import com.rsschool.quiz.fragments.ResultFragment
 import com.rsschool.quiz.interfaces.QuestionFragmentListener
+import com.rsschool.quiz.interfaces.ResultFragmentListener
 
 const val CURRENT_QUIZ = "currentQuiz"
 const val CURRENT_QUESTION = "currentQuestion"
 
 
-class MainActivity : AppCompatActivity(), QuestionFragmentListener {
+class MainActivity : AppCompatActivity(),
+    QuestionFragmentListener, ResultFragmentListener {
 
     private val themes = arrayOf(
         R.style.Theme_Quiz_First,
@@ -69,5 +71,9 @@ class MainActivity : AppCompatActivity(), QuestionFragmentListener {
 
     override fun setResult() {
         setResultFragment()
+    }
+
+    override fun startNewQuiz() {
+        setNextQuestion()
     }
 }
