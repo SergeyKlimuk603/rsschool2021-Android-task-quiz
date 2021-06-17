@@ -107,8 +107,8 @@ class QuestionFragment : Fragment() {
                 }
             }
         }
-        binding.previousButton.setOnClickListener(previousListener1)
-        binding.toolbar.setNavigationOnClickListener() {previousListener}
+        binding.previousButton.setOnClickListener(previousListener)
+        binding.toolbar.setNavigationOnClickListener(previousListener)
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             binding.nextButton.isEnabled = true
             userChoice = when (checkedId) {
@@ -121,13 +121,8 @@ class QuestionFragment : Fragment() {
         }
     }
 
-    object PreviousListener1: View.OnClickListener {
-        override fun onClick(v: View?) {
-            println()
-        }
 
-    }
-    private val previousListener = recordState(--currentQuestion)
+    private val previousListener = View.OnClickListener{recordState(--currentQuestion)}
     private fun recordState(newQuestion: Int) {
         val sPref = context?.getSharedPreferences(CURRENT_QUIZ, MODE_PRIVATE)
         val editor = sPref?.edit()
