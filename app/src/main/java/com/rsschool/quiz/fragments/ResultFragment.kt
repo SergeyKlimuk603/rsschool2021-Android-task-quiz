@@ -13,7 +13,6 @@ import com.rsschool.quiz.databinding.FragmentResultBinding
 import com.rsschool.quiz.interfaces.ResultFragmentListener
 import com.rsschool.quiz.models.Question
 
-
 class ResultFragment : Fragment() {
 
     private var _binding: FragmentResultBinding? = null
@@ -34,6 +33,10 @@ class ResultFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        readData()
+    }
+
+    private fun readData() {
         val sPref = context?.getSharedPreferences(CURRENT_QUIZ, MODE_PRIVATE)
         val lastQuestion = sPref?.getInt(LAST_QUESTION, -1) ?: -1
         userAnswers = Array(lastQuestion + 1) { -1 }
@@ -58,6 +61,14 @@ class ResultFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentResultBinding.inflate(inflater, container, false)
+        val result = getResult()
+        binding.tvResult.text = "Ваш результат: $result/${userAnswers.size}"
+        binding.tvStringResult.text = stringResult.toString()
+        setButtonListeners()
+        return binding.root
+    }
+
+    private fun getResult(): Int {
         var result = 0
         for ((i, e) in userAnswers.withIndex()) {
             stringResult.append("$i) ${questions[i]?.question}\n" +
@@ -67,10 +78,7 @@ class ResultFragment : Fragment() {
             }
         }
         stringResult.insert(0, "Ваш результат: $result/${userAnswers.size}\n\n")
-        binding.tvResult.text = "Ваш результат: $result/${userAnswers.size}"
-        binding.tvStringResult.text = stringResult.toString()
-        setButtonListeners()
-        return binding.root
+        return result
     }
 
     private fun setButtonListeners() {
@@ -95,12 +103,10 @@ class ResultFragment : Fragment() {
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance() =
             ResultFragment().apply {
                 arguments = Bundle().apply {
-
                 }
             }
     }
