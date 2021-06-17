@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.fragments.QuestionFragment
+import com.rsschool.quiz.fragments.ResultFragment
 import com.rsschool.quiz.interfaces.QuestionFragmentListener
 
 const val CURRENT_QUIZ = "currentQuiz"
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity(), QuestionFragmentListener {
         super.onCreate(savedInstanceState)
         setTheme(getCurrentTheme())
         setContentView(R.layout.activity_main)
-        setQuestionFragment(currentQuestion)
+        setQuestionFragment()
     }
 
     private fun getCurrentTheme(): Int {
@@ -44,9 +45,14 @@ class MainActivity : AppCompatActivity(), QuestionFragmentListener {
         return sPref.getInt(CURRENT_QUESTION, -1)
     }
 
-    private fun setQuestionFragment(currentQuestion: Int) {
+    private fun setQuestionFragment() {
         replaceFragment(QuestionFragment.newInstance(currentQuestion))
     }
+
+    private fun setResultFragment() {
+        replaceFragment(ResultFragment.newInstance())
+    }
+
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
@@ -59,5 +65,9 @@ class MainActivity : AppCompatActivity(), QuestionFragmentListener {
         startActivity(intent)
         overridePendingTransition(0,0)
         finish()
+    }
+
+    override fun setResult() {
+        setResultFragment()
     }
 }
