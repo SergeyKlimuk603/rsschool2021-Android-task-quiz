@@ -119,6 +119,15 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textSize="12sp"
+        android:textColor="#808080"
+        android:text="@string/toReviewer"
+        app:layout_constraintBottom_toTopOf="@id/next_button"/>
+
     <Button
         android:id="@+id/previous_button"
         android:layout_width="150dp"

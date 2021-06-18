@@ -123,6 +123,7 @@ class QuestionFragment : Fragment() {
             radioButtons.forEachIndexed { index, radioButton ->
                 if (radioButton.id == checkedId) {
                     userChoice = index
+                    recordState(currentQuestion)
                 }
             }
         }
@@ -141,7 +142,8 @@ class QuestionFragment : Fragment() {
         editor?.apply()
     }
 
-    private val previousListener = View.OnClickListener{changeQuestion(currentQuestion - 1)}
+    private val previousListener =
+        View.OnClickListener{changeQuestion(currentQuestion - 1)}
 
     override fun onDestroy() {
         super.onDestroy()
